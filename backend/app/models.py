@@ -10,6 +10,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
+    parcels = relationship("Parcel", back_populates="sender")
     
 class Parcel(Base):
     __tablename__ = 'parcels'
@@ -19,4 +20,4 @@ class Parcel(Base):
     recipient_name = Column(String, index=True)
     recipient_address = Column(String, index=True)
     status = Column(String, default="Pending")
-    sender = relationship("User", back_populates="parcel")
+    sender = relationship("User", back_populates="parcels")
