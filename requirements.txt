@@ -1,0 +1,5 @@
+Flask==2.1.1
+fastapi==0.75.0
+uvicorn==0.17.6
+SQLAlchemy==1.4.31
+psycopg2-binary==2.9.3
