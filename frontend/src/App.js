@@ -23,26 +23,36 @@
 // }
 
 // export default App;
-import React from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import AuthProvider from './contexts/AuthContext';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { AuthContext } from './contexts/AuthContext';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import CreateParcel from './components/Parcels/CreateParcel';
 import ParcelList from './components/Parcels/ParcelList';
 
 const App = () => {
+  const { auth } = useContext(AuthContext);
+
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path='/register' element={<Register/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/create-parcel' element={<CreateParcel/>}/>
-          <Route path='/parcels' element={<ParcelList/>}/>
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <Routes>
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route 
+          path='/create-parcel' 
+          element={auth ? <CreateParcel /> : <Navigate to='/login' />} 
+        />
+        <Route 
+          path='/parcels' 
+          element={auth ? <ParcelList /> : <Navigate to='/login' />} 
+        />
+        <Route 
+          path='/' 
+          element={auth ? <Navigate to='/parcels' /> : <Navigate to='/login' />} 
+        />
+      </Routes>
+    </Router>
   );
 };
 

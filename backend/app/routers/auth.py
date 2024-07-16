@@ -28,6 +28,7 @@ def create_access_token(data: dict, expires_delta: timedelta=None):
 
 @router.post("/token", response_model=schemas.Token)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    print(f"Received login request: {form_data.username}, {form_data.password}")
     user = crud.get_user_by_username(db, username=form_data.username)
     if not user or not pwd_context.verify(form_data.password, user.hashed_password):
         raise HTTPException(

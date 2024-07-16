@@ -10,6 +10,10 @@ export const getToken = async (credentials) => {
     params.append('username', credentials.username);
     params.append('password', credentials.password);
 
-    const response = await axios.post('/auth/token', params);
+    const response = await axios.post('/auth/token', params, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    });
     return response.data;
 };
